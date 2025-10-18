@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanssi Network Q&A Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        
+        .qa-container {
+            padding: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .question {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .question:hover {
+            background: #e3f2fd;
+            transform: translateX(5px);
+        }
+        
+        .answer {
+            background: #e8f4fc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: none;
+            border-left: 4px solid #2ecc71;
+            line-height: 1.6;
+            color: #34495e;
+        }
+        
+        .answer.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .footer {
+            background: #ecf0f1;
+            padding: 15px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .question, .answer {
+                padding: 12px;
+            }
+        }
+        
+        .token-uses {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+        
+        .token-uses li {
+            margin-bottom: 8px;
+        }
+        
+        .participation-options {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+        
+        .participation-options li {
+            margin-bottom: 8px;
+        }
+        
+        .search-container {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Tanssi Network Q&A Tool</h1>
+            <p>Click on any question to view its answer</p>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search for questions or keywords..." onkeyup="searchQuestions()">
+        </div>
+        
+        <div class="qa-container">
+            <div class="question" onclick="toggleAnswer(1)">1. What is Tanssi Network?</div>
+            <div class="answer" id="answer1">
+                Tanssi Network is a modular infrastructure protocol within the Polkadot ecosystem. It enables developers to deploy application-specific blockchains, called "ContainerChains," in minutes. Built on Substrate, it simplifies blockchain development by automating processes like validator orchestration, RPC endpoints, and decentralized sequencing, making it ideal for DeFi, RWA, and fintech projects.
+            </div>
+            
+            <div class="question" onclick="toggleAnswer(2)">2. What are ContainerChains?</div>
+            <div class="answer" id="answer2">
+                ContainerChains are customizable blockchains deployed via Tanssi Network. They leverage Polkadot's shared security and interoperability while allowing developers to tailor them for specific use cases, such as DeFi platforms, tokenized assets, or gaming ecosystems.
+            </div>
+            
+            <div class="question" onclick="toggleAnswer(3)">3. What is the $TANSSI token used for?</div>
+            <div class="answer" id="answer3">
+                The $TANSSI token is used for:
+                <ul class="token-uses">
+                    <li>Paying network fees</li>
+                    <li>Staking to secure the network</li>
+                    <li>Governance voting</li>
+                    <li>Bridging assets across chains</li>
+                    <li>Earning ecosystem rewards</li>
+                </ul>
+                It exists as both an ERC-20 token on Ethereum and a native Substrate token, interchangeable at a 1:1 ratio.
+            </div>
+            
+            <div class="question" onclick="toggleAnswer(4)">4. How does Tanssi ensure security?</div>
+            <div class="answer" id="answer4">
+                Tanssi integrates with Symbiotic, providing over $350 million in economic security through Ethereum-backed restaking. It also uses Polkadot's shared security model, ensuring robust protection for all ContainerChains.
+            </div>
+            
+            <div class="question" onclick="toggleAnswer(5)">5. What makes Tanssi different from other blockchain platforms?</div>
+            <div class="answer" id="answer5">
+                Tanssi simplifies blockchain deployment by automating complex infrastructure tasks (e.g., validators, explorers, wallets). It's permissionless, interoperable with Polkadot and Ethereum, and significantly reduces development time from months to minutes.
+            </div>
+            
+            <div class="question" onclick="toggleAnswer(6)">6. Who can use Tanssi Network?</div>
+            <div class="answer" id="answer6">
+                Developers, startups, and enterprises building DeFi, RWA, gaming, or other Web3 applications can use Tanssi. Its permissionless nature allows anyone to deploy a ContainerChain without gatekeepers.
+            </div>
+            
+            <div class="question" onclick="toggleAnswer(7)">7. What are some projects built on Tanssi?</div>
+            <div class="answer" id="answer7">
+                As of October 2025, projects like Decentral (RWA platform), BEEFY, Gavun Wud, and Lumia have launched ContainerChains on Tanssi. More are expected as the ecosystem grows.
+            </div>
+            
+            <div class="question" onclick="toggleAnswer(8)">8. How does Tanssi integrate with Ethereum?</div>
+            <div class="answer" id="answer8">
+                Tanssi supports Ethereum through bridges and integrates with Symbiotic for restaking. The $TANSSI token's ERC-20 version allows seamless interaction with Ethereum-based applications.
+            </div>
+            
+            <div class="question" onclick="toggleAnswer(9)">9. When was Tanssi Network's mainnet launched?</div>
+            <div class="answer" id="answer9">
+                Tanssi's mainnet launched in July 2025, enabling developers to deploy ContainerChains and access its full feature set.
+            </div>
+            
+            <div class="question" onclick="toggleAnswer(10)">10. How can developers get started with Tanssi?</div>
+            <div class="answer" id="answer10">
+                Developers can visit tanssi.network to access documentation, join the permissionless network, and deploy ContainerChains. Tanssi also offers campaigns like "Let's Forkin' Dance" for funding and support.
+            </div>
+            
+            <div class="question" onclick="toggleAnswer(11)">11. What is the role of the Tanssi Foundation?</div>
+            <div class="answer" id="answer11">
+                The Tanssi Foundation manages the Tanssi Network, ensuring its development, governance, and ecosystem growth. It was founded by Moondance Labs, the creators of Tanssi.
+            </div>
+            
+            <div class="question" onclick="toggleAnswer(12)">12. How can I participate in the Tanssi ecosystem?</div>
+            <div class="answer" id="answer12">
+                You can:
+                <ul class="participation-options">
+                    <li>Stake $TANSSI tokens to secure the network and earn rewards.</li>
+                    <li>Deploy a ContainerChain as a developer.</li>
+                    <li>Participate in governance voting.</li>
+                    <li>Join community campaigns or airdrops (37% of $TANSSI supply is allocated for community rewards).</li>
+                </ul>
+            </div>
+            
+            <div class="question" onclick="toggleAnswer(13)">13. Where can I find more information about Tanssi?</div>
+            <div class="answer" id="answer13">
+                Visit the official website at tanssi.network or check Tanssi's social media channels for updates. You can also explore Polkadot's ecosystem documentation for related insights.
+            </div>
+        </div>
+        
+        <div class="footer">
+            Tanssi Network Q&A Tool | Created with HTML, CSS & JavaScript
+        </div>
+    </div>
+
+    <script>
+        let currentlyActive = null;
+        
+        function toggleAnswer(number) {
+            const answerElement = document.getElementById('answer' + number);
+            
+            // If this answer is already showing, close it
+            if (currentlyActive === answerElement) {
+                answerElement.classList.remove('active');
+                currentlyActive = null;
+                return;
+            }
+            
+            // Close previously active answer
+            if (currentlyActive) {
+                currentlyActive.classList.remove('active');
+            }
+            
+            // Show new answer
+            answerElement.classList.add('active');
+            currentlyActive = answerElement;
+            
+            // Scroll to make the answer visible
+            answerElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        function searchQuestions() {
+            const searchTerm = document.querySelector('.search-box').value.toLowerCase();
+            const questions = document.querySelectorAll('.question');
+            const answers = document.querySelectorAll('.answer');
+            
+            questions.forEach((question, index) => {
+                const questionText = question.textContent.toLowerCase();
+                const answerText = answers[index].textContent.toLowerCase();
+                
+                if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+                    question.style.display = 'block';
+                    answers[index].style.display = 'none';
+                    
+                    // Highlight matching text
+                    if (searchTerm) {
+                        const regex = new RegExp(`(${searchTerm})`, 'gi');
+                        question.innerHTML = question.textContent.replace(regex, '<span class="highlight">$1</span>');
+                        answers[index].innerHTML = answers[index].textContent.replace(regex, '<span class="highlight">$1</span>');
+                    } else {
+                        question.innerHTML = question.textContent;
+                        answers[index].innerHTML = answers[index].textContent;
+                    }
+                } else {
+                    question.style.display = 'none';
+                    answers[index].style.display = 'none';
+                }
+            });
+        }
+        
+        // Open first question by default
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleAnswer(1);
+        });
+    </script>
+</body>
+</html>
